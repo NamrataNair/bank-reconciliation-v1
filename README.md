@@ -23,6 +23,12 @@ The platform supports:
 * Multi-company support
 * Multi-bank support
 * Multi-currency support
+* Exception Management
+* AI Match Suggestions
+* Auto Journal Entries
+* Intercompany Reconciliation
+* Treasury Management
+* Real-Time Bank APIs
 
 ## 2. Architecture
 
@@ -32,11 +38,11 @@ The platform supports:
 
 **Backend Layer**
 * Technology: Django, Django REST Framework
-* Responsibilities: Authentication, Reconciliation processing, Business rules, Workflow management, Reporting
+* Responsibilities: Authentication, Reconciliation processing, Business rules, Workflow management, Reporting, Integrations
 
 **Processing Layer**
 * Technology: Celery, Redis
-* Responsibilities: File processing, Matching jobs, Scheduled jobs, Report generation
+* Responsibilities: File processing, Matching jobs, Scheduled jobs, Report generation, AI Inference integration
 
 **Database Layer**
 * Technology: PostgreSQL (Defaulted to SQLite for local setup)
@@ -44,51 +50,40 @@ The platform supports:
 
 ## 3. Functional Modules
 
-**Authentication & Security**
-* Features: Login, Logout, Password reset, Session management
-* Roles: Administrator, Reconciliation User, Reviewer, Approver, Auditor
+**Core Engine**
+* Authentication & Security (Users, Roles, Audit)
+* Company & Bank Management
+* Statement Import (CSV, XLSX, MT940)
+* Matching Engine (One-to-One, Many-to-Many, etc.)
+* Approval Workflows
 
-**Company Management**
-* Manage: Companies, Branches, Departments
-* Fields: Company Code, Company Name, GST Number, PAN Number, Currency
-
-**Bank Management**
-* Manage: Banks, Bank Accounts
-* Fields: Account Number, Account Type, Currency, Opening Balance
-
-**Statement Import**
-* Supported Formats: CSV, XLSX, MT940
-* Validation: Duplicate file detection, Mandatory field validation, Format validation
-* Process: Upload -> Validation -> Staging -> Transaction Creation -> Audit Logging
-
-**Transaction Repository**
-* Store all normalized transactions from sources like BANK, UPI, CARD, PAYROLL, AP, AR, TAX, GATEWAY.
-
-**Matching Engine**
-* Supported Matching: One-to-One, One-to-Many, Many-to-One, Many-to-Many
-* Matching Criteria: Reference Number, UTR, RRN, Amount, Date, Settlement ID
-
-**UPI & Gateway Reconciliation**
-* Captures IDs, Amounts, Fees, GST, and Net Settlement with automated matching rules.
-
-**Approval Workflow**
-* States: Draft -> Prepared -> Reviewed -> Approved
-* Actions: Approve, Reject, Send Back
-
-**Audit Trail**
-* Tracks all activities with immutable records.
+**Advanced Modules**
+* **Exception Management:** Handles routing and resolution of unmatched or problematic transactions.
+* **AI Match Suggestions:** Provides machine-learning based recommendations for potential matches.
+* **Auto Journal Entries:** Automatically drafts General Ledger (GL) lines for approved reconciliations.
+* **Intercompany Reconciliation:** Reconciles internal transactions between sibling or parent-child companies.
+* **Treasury Management:** Tracks projected vs. actual cash positioning across bank accounts.
+* **Real-Time Bank APIs:** Integrates directly with banking institutions to pull statement data live.
 
 ## 4. Database Design
-Core Tables:
-* `users`, `roles`, `permissions`
+Core App Tables:
+* `users`, `roles`, `permissions`, `audit_logs`, `system_settings`
 * `companies`, `branches`
 * `banks`, `bank_accounts`
+
+Reconciliation App Tables:
 * `import_batches`
 * `bank_transactions`, `source_transactions`
 * `reconciliation_groups`, `reconciliation_items`
 * `approval_workflows`, `approval_actions`
-* `tds_entries`, `interest_entries`
-* `audit_logs`, `report_requests`, `system_settings`
+
+Advanced Phase App Tables:
+* `ExceptionCase` (exception_management)
+* `MatchSuggestion` (ai_matching)
+* `JournalEntry`, `JournalEntryLine` (journal_entries)
+* `IntercompanyTransaction` (intercompany)
+* `TreasuryPosition` (treasury)
+* `BankAPIConnection` (realtime_banks)
 
 ---
 
@@ -161,7 +156,7 @@ Once running, you can access the platform at:
 
 ## Testing
 
-To run the unit test suite across the core, api, and reconciliation applications, execute:
+To run the unit test suite across the core, api, and advanced applications, execute:
 ```
 python manage.py test
 ```
@@ -169,6 +164,6 @@ python manage.py test
 ---
 
 ## Future Roadmap
-* Phase 2: Exception Management, AI Match Suggestions, Auto Journal Entries
-* Phase 3: Intercompany Reconciliation, Treasury Management, Advanced Analytics
-* Phase 4: ML Matching Engine, Predictive Reconciliation, Real-Time Bank APIs
+* ML Matching Engine (Implementation & Tuning)
+* Predictive Reconciliation
+* Advanced Analytics Dashboards
