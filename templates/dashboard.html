@@ -12,7 +12,7 @@
         <div class="card text-white bg-primary mb-3">
             <div class="card-body">
                 <h5 class="card-title">Total Transactions</h5>
-                <p class="card-text fs-2">0</p>
+                <p class="card-text fs-2">{{ total_tx }}</p>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
         <div class="card text-white bg-success mb-3">
             <div class="card-body">
                 <h5 class="card-title">Matched Transactions</h5>
-                <p class="card-text fs-2">0</p>
+                <p class="card-text fs-2">{{ matched_tx }}</p>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
         <div class="card text-white bg-warning mb-3">
             <div class="card-body">
                 <h5 class="card-title">Pending Transactions</h5>
-                <p class="card-text fs-2">0</p>
+                <p class="card-text fs-2">{{ pending_tx }}</p>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <div class="card text-white bg-info mb-3">
             <div class="card-body">
                 <h5 class="card-title">Match %</h5>
-                <p class="card-text fs-2">0%</p>
+                <p class="card-text fs-2">{{ match_percentage }}%</p>
             </div>
         </div>
     </div>

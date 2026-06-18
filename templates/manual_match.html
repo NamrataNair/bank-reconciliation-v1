@@ -20,9 +20,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for tx in bank_tx %}
+                        <tr>
+                            <td><input type="checkbox" name="bank_tx" value="{{ tx.id }}"></td>
+                            <td>{{ tx.date }}</td>
+                            <td>{{ tx.description }}</td>
+                            <td>{{ tx.amount }}</td>
+                        </tr>
+                        {% empty %}
                         <tr>
                             <td colspan="4" class="text-center text-muted">No unmatched bank transactions.</td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -46,9 +55,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for tx in source_tx %}
+                        <tr>
+                            <td><input type="checkbox" name="source_tx" value="{{ tx.id }}"></td>
+                            <td>{{ tx.date }}</td>
+                            <td>{{ tx.source_type }}</td>
+                            <td>{{ tx.amount }}</td>
+                        </tr>
+                        {% empty %}
                         <tr>
                             <td colspan="4" class="text-center text-muted">No unmatched source transactions.</td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
