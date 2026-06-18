@@ -46,6 +46,15 @@ INSTALLED_APPS = [
     "reconciliation",
     "api",
 
+    "exception_management",
+    "ai_matching",
+    "journal_entries",
+    "intercompany",
+    "treasury",
+    "analytics",
+    "realtime_banks",
+
+
 ]
 
 MIDDLEWARE = [
