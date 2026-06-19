@@ -1,15 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
 # Django
 *.log
-*.pot
-*.pyc
-__pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
-# Celery
-celerybeat-schedule
-celerybeat.pid
+media
 
 # Environments
 .env
@@ -20,9 +38,10 @@ ENV/
 env.bak/
 venv.bak/
 
-# Environment Variables
-.env
-__pycache__/
-*/__pycache__
+# Logs and tests
 test_output.txt
+check_out.txt
+test_out.txt
+final_test.log
 result.log
+test_runner.py
