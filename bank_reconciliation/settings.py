@@ -152,3 +152,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # Custom User Model
 AUTH_USER_MODEL = "core.User"
+
+# AI Integration Settings
+AI_PROVIDER = os.environ.get("AI_PROVIDER", "ollama") # Options: 'openai', 'gemini', 'ollama'
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+OLLAMA_ENDPOINT = os.environ.get("OLLAMA_ENDPOINT", "http://localhost:11434/api/generate")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3")
