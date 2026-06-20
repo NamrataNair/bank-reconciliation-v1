@@ -163,6 +163,40 @@ python manage.py test
 
 ---
 
+## 6. Docker Deployment
+
+The platform is configured to easily run in a production-like environment using Docker and Docker Compose.
+
+### Prerequisites
+- Docker
+- Docker Compose
+
+### Running via Docker Compose
+
+1. **Build and start the containers:**
+   ```bash
+   docker-compose up -d --build
+   ```
+
+2. **Apply database migrations:**
+   ```bash
+   docker-compose exec web python manage.py migrate
+   ```
+
+3. **(Optional) Create a superuser:**
+   ```bash
+   docker-compose exec web python manage.py createsuperuser
+   ```
+
+The application will now be running at [http://localhost:8000/](http://localhost:8000/).
+The setup includes:
+- `db`: PostgreSQL database.
+- `redis`: Redis server for background task message brokering.
+- `web`: The Django application running via Gunicorn.
+- `celery`: The Celery worker handling background jobs.
+
+---
+
 ## Future Roadmap
 * ML Matching Engine (Implementation & Tuning)
 * Predictive Reconciliation
