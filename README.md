@@ -167,3 +167,24 @@ python manage.py test
 * ML Matching Engine (Implementation & Tuning)
 * Predictive Reconciliation
 * Advanced Analytics Dashboards
+
+## Docker Deployment
+
+To deploy using Docker:
+
+1. Build and start the containers:
+   ```
+   docker-compose up -d --build
+   ```
+
+2. Run database migrations:
+   ```
+   docker-compose exec web python manage.py migrate
+   ```
+
+3. Create a superuser:
+   ```
+   docker-compose exec web python manage.py createsuperuser
+   ```
+
+The application will be available at `http://localhost`.
