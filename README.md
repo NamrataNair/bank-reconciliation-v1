@@ -127,7 +127,9 @@ Ensure you have the following installed on your local machine:
 
 ### Execution Steps
 
-To run the full stack locally, you need to run three separate processes. It is recommended to open three terminal windows.
+#### Method 1: Local Development (SQLite)
+
+To run the full stack locally without Docker, you need to run three separate processes. It is recommended to open three terminal windows.
 
 **Terminal 1: Start the Redis Server**
 Make sure the Redis server is running. If you are on Linux or macOS, you can typically start it using:
@@ -151,6 +153,21 @@ Once running, you can access the platform at:
 - Web Interface: [http://localhost:8000/](http://localhost:8000/)
 - API Endpoints: [http://localhost:8000/api/](http://localhost:8000/api/)
 - Django Admin: [http://localhost:8000/admin/](http://localhost:8000/admin/)
+
+#### Method 2: Deployment via Docker Compose
+
+To deploy the entire platform including PostgreSQL, Redis, Celery, Gunicorn, and Nginx using Docker:
+
+1. Ensure Docker and Docker Compose are installed.
+2. Build and start the services in the background:
+   ```
+   docker-compose up -d --build
+   ```
+
+Once all containers are up and running, you can access the platform at:
+- Web Interface: [http://localhost/](http://localhost/)
+- API Endpoints: [http://localhost/api/](http://localhost/api/)
+- Django Admin: [http://localhost/admin/](http://localhost/admin/)
 
 ---
 
