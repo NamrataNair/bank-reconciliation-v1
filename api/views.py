@@ -1,10 +1,28 @@
 from rest_framework import viewsets
-from core.models import User, Company, Branch, Bank, BankAccount
-from reconciliation.models import BankTransaction, SourceTransaction, ImportBatch, ReconciliationGroup
+from core.models import User, Company, Branch, Bank, BankAccount, Role, SystemSetting, AuditLog, ReportRequest
+from reconciliation.models import BankTransaction, SourceTransaction, ImportBatch, ReconciliationGroup, ReconciliationItem, ApprovalWorkflow, ApprovalAction, TDSEntry, InterestEntry
 from .serializers import (
     UserSerializer, CompanySerializer, BranchSerializer, BankSerializer, BankAccountSerializer,
-    ImportBatchSerializer, BankTransactionSerializer, SourceTransactionSerializer, ReconciliationGroupSerializer
+    ImportBatchSerializer, BankTransactionSerializer, SourceTransactionSerializer, ReconciliationGroupSerializer,
+    RoleSerializer, SystemSettingSerializer, AuditLogSerializer, ReportRequestSerializer,
+    ReconciliationItemSerializer, ApprovalWorkflowSerializer, ApprovalActionSerializer, TDSEntrySerializer, InterestEntrySerializer
 )
+
+class RoleViewSet(viewsets.ModelViewSet):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+
+class SystemSettingViewSet(viewsets.ModelViewSet):
+    queryset = SystemSetting.objects.all()
+    serializer_class = SystemSettingSerializer
+
+class AuditLogViewSet(viewsets.ModelViewSet):
+    queryset = AuditLog.objects.all()
+    serializer_class = AuditLogSerializer
+
+class ReportRequestViewSet(viewsets.ModelViewSet):
+    queryset = ReportRequest.objects.all()
+    serializer_class = ReportRequestSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -41,3 +59,23 @@ class SourceTransactionViewSet(viewsets.ModelViewSet):
 class ReconciliationGroupViewSet(viewsets.ModelViewSet):
     queryset = ReconciliationGroup.objects.all()
     serializer_class = ReconciliationGroupSerializer
+
+class ReconciliationItemViewSet(viewsets.ModelViewSet):
+    queryset = ReconciliationItem.objects.all()
+    serializer_class = ReconciliationItemSerializer
+
+class ApprovalWorkflowViewSet(viewsets.ModelViewSet):
+    queryset = ApprovalWorkflow.objects.all()
+    serializer_class = ApprovalWorkflowSerializer
+
+class ApprovalActionViewSet(viewsets.ModelViewSet):
+    queryset = ApprovalAction.objects.all()
+    serializer_class = ApprovalActionSerializer
+
+class TDSEntryViewSet(viewsets.ModelViewSet):
+    queryset = TDSEntry.objects.all()
+    serializer_class = TDSEntrySerializer
+
+class InterestEntryViewSet(viewsets.ModelViewSet):
+    queryset = InterestEntry.objects.all()
+    serializer_class = InterestEntrySerializer
