@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Approval Queue</h2>
+<div class="row mt-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Pending Approvals</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Group ID</th>
+                            <th>State</th>
+                            <th>Updated At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for workflow in workflows %}
+                        <tr>
+                            <td>{{ workflow.group.id }}</td>
+                            <td>{{ workflow.state }}</td>
+                            <td>{{ workflow.updated_at }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-success">Approve</button>
+                                <button class="btn btn-sm btn-danger">Reject</button>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No pending approvals.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
