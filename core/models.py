@@ -64,3 +64,15 @@ class SystemSetting(models.Model):
 
     def __str__(self):
         return self.key
+
+class ReportRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='report_requests')
+    report_type = models.CharField(max_length=100)
+    parameters = models.JSONField(blank=True, null=True)
+    status = models.CharField(max_length=50, default='PENDING') # PENDING, PROCESSING, COMPLETED, FAILED
+    requested_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(blank=True, null=True)
+    file_path = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.report_type} by {self.user.username} at {self.requested_at}"
