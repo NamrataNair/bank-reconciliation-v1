@@ -1,4 +1,4 @@
-# Bank Reconciliation Platform
+# Bank Reconciliation Platform - Complete Design Document (V1)
 
 ## 1. Objective
 Develop a configurable bank reconciliation platform capable of reconciling:
@@ -66,24 +66,105 @@ The platform supports:
 * **Real-Time Bank APIs:** Integrates directly with banking institutions to pull statement data live.
 
 ## 4. Database Design
-Core App Tables:
+**Core Tables**
 * `users`, `roles`, `permissions`, `audit_logs`, `system_settings`
 * `companies`, `branches`
 * `banks`, `bank_accounts`
-
-Reconciliation App Tables:
 * `import_batches`
 * `bank_transactions`, `source_transactions`
 * `reconciliation_groups`, `reconciliation_items`
 * `approval_workflows`, `approval_actions`
+* `tds_entries`, `interest_entries`
+* `report_requests`
 
-Advanced Phase App Tables:
-* `ExceptionCase` (exception_management)
-* `MatchSuggestion` (ai_matching)
-* `JournalEntry`, `JournalEntryLine` (journal_entries)
-* `IntercompanyTransaction` (intercompany)
-* `TreasuryPosition` (treasury)
-* `BankAPIConnection` (realtime_banks)
+## 5. Frontend Screens
+**Dashboard**
+* Widgets: Total Transactions, Matched Transactions, Pending Transactions, Match %, Imports Today
+
+**Company Maintenance**
+* Create/Edit/Delete Company
+
+**Bank Account Maintenance**
+* Create/Edit/Delete Bank Accounts
+
+**Statement Upload**
+* Upload File, View Import Status, Import History
+
+**Transaction Browser**
+* Filters: Date, Bank, Amount, Status, Source
+* Actions: View, Export
+
+**Auto Match Screen**
+* Run Matching, View Results, Approve Matches
+
+**Manual Match Screen**
+* Left Grid: Bank Transactions
+* Right Grid: Source Transactions
+* Actions: Match, Split, Merge, Unmatch
+
+**Approval Queue**
+* Pending Approvals, Review, Approve, Reject
+
+**Reports**
+* Bank Reconciliation Statement, Interest Report, TDS Report, Charges Report, Pending Reconciliation Report
+
+## 6. REST APIs
+* Authentication APIs
+* Company APIs
+* Bank APIs
+* Import APIs
+* Transaction APIs
+* Matching APIs
+* Approval APIs
+* Report APIs
+* Audit APIs
+
+## 7. Security
+* Password Policy
+* Role Based Access Control
+* Session Timeout
+* Audit Logging
+* CSRF Protection
+* Input Validation
+* Encryption of Sensitive Data
+
+## 8. Background Jobs
+* Import Job
+* Auto Matching Job
+* Report Generation Job
+* Cleanup Job
+* Notification Job
+
+## 9. Performance Targets
+* Import: 50,000 records under 2 minutes
+* Matching: 100,000 transactions under 5 minutes
+* Concurrent Users: 100+
+* Database: Millions of transaction records
+
+## 10. Deployment
+* Docker
+* Nginx
+* Gunicorn
+* Redis
+* Celery Workers
+* PostgreSQL
+* Linux Server
+
+## 11. Future Roadmap
+**Phase 2:**
+* Exception Management
+* AI Match Suggestions
+* Auto Journal Entries
+
+**Phase 3:**
+* Intercompany Reconciliation
+* Treasury Management
+* Advanced Analytics
+
+**Phase 4:**
+* ML Matching Engine
+* Predictive Reconciliation
+* Real-Time Bank APIs
 
 ---
 
@@ -160,10 +241,3 @@ To run the unit test suite across the core, api, and advanced applications, exec
 ```
 python manage.py test
 ```
-
----
-
-## Future Roadmap
-* ML Matching Engine (Implementation & Tuning)
-* Predictive Reconciliation
-* Advanced Analytics Dashboards

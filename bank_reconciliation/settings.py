@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "treasury",
     "analytics",
     "realtime_banks",
-
+    "reports",
 
 ]
 

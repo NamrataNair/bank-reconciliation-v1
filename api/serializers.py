@@ -1,6 +1,50 @@
 from rest_framework import serializers
-from core.models import User, Company, Branch, Bank, BankAccount
-from reconciliation.models import BankTransaction, SourceTransaction, ImportBatch, ReconciliationGroup
+from core.models import User, Company, Branch, Bank, BankAccount, Role, AuditLog, SystemSetting
+from reconciliation.models import (
+    BankTransaction, SourceTransaction, ImportBatch, ReconciliationGroup,
+    ApprovalWorkflow, ApprovalAction, TDSEntry, InterestEntry
+)
+from reports.models import ReportRequest
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = '__all__'
+
+class AuditLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuditLog
+        fields = '__all__'
+
+class SystemSettingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SystemSetting
+        fields = '__all__'
+
+class ApprovalWorkflowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApprovalWorkflow
+        fields = '__all__'
+
+class ApprovalActionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApprovalAction
+        fields = '__all__'
+
+class TDSEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TDSEntry
+        fields = '__all__'
+
+class InterestEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InterestEntry
+        fields = '__all__'
+
+class ReportRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReportRequest
+        fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
