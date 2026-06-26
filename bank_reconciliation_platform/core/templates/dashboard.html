@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Dashboard</h2>
+
+    <div class="row">
+        <!-- Widget: Total Transactions -->
+        <div class="col-md-3 mb-4">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Total Transactions</h5>
+                    <h2 class="display-4">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Widget: Matched Transactions -->
+        <div class="col-md-3 mb-4">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Matched</h5>
+                    <h2 class="display-4">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Widget: Pending Transactions -->
+        <div class="col-md-3 mb-4">
+            <div class="card bg-warning text-dark h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Pending</h5>
+                    <h2 class="display-4">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Widget: Match % -->
+        <div class="col-md-3 mb-4">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Match %</h5>
+                    <h2 class="display-4">0%</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
