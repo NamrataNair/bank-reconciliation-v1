@@ -1,7 +1,9 @@
-# Bank Reconciliation Platform
+# Bank Reconciliation Platform - Complete Design Document (V1)
 
 ## 1. Objective
+
 Develop a configurable bank reconciliation platform capable of reconciling:
+
 * Bank statements
 * UPI transactions
 * NEFT/RTGS/IMPS transactions
@@ -15,7 +17,8 @@ Develop a configurable bank reconciliation platform capable of reconciling:
 * TDS deductions
 * Bank charges
 
-The platform supports:
+The platform should support:
+
 * Automated matching
 * Manual reconciliation
 * Approval workflows
@@ -33,51 +36,224 @@ The platform supports:
 ## 2. Architecture
 
 **Frontend Layer**
-* Technology: Django Templates, HTMX, Bootstrap 5
-* Responsibilities: Dashboard, Import screens, Reconciliation screens, Reports, Administration
+
+Technology:
+* Django Templates
+* HTMX
+* Bootstrap 5
+
+Responsibilities:
+* Dashboard
+* Import screens
+* Reconciliation screens
+* Reports
+* Administration
 
 **Backend Layer**
-* Technology: Django, Django REST Framework
-* Responsibilities: Authentication, Reconciliation processing, Business rules, Workflow management, Reporting, Integrations
+
+Technology:
+* Django
+* Django REST Framework
+
+Responsibilities:
+* Authentication
+* Reconciliation processing
+* Business rules
+* Workflow management
+* Reporting
+* Integrations
 
 **Processing Layer**
-* Technology: Celery, Redis
-* Responsibilities: File processing, Matching jobs, Scheduled jobs, Report generation, AI Inference integration
+
+Technology:
+* Celery
+* Redis
+
+Responsibilities:
+* File processing
+* Matching jobs
+* Scheduled jobs
+* Report generation
+* AI Inference integration
 
 **Database Layer**
-* Technology: PostgreSQL (Defaulted to SQLite for local setup)
-* Responsibilities: Transaction storage, Audit trail, Workflow state, Reporting
+
+Technology:
+* PostgreSQL (Defaulted to SQLite for local setup)
+
+Responsibilities:
+* Transaction storage
+* Audit trail
+* Workflow state
+* Reporting
 
 ## 3. Functional Modules
 
-**Core Engine**
-* Authentication & Security (Users, Roles, Audit)
-* Company & Bank Management
-* Statement Import (CSV, XLSX, MT940)
-* Matching Engine (One-to-One, Many-to-Many, etc.)
-* Approval Workflows
+**Authentication & Security**
+Features:
+* Login
+* Logout
+* Password reset
+* Session management
 
-**Advanced Modules**
-* **Exception Management:** Handles routing and resolution of unmatched or problematic transactions.
-* **AI Match Suggestions:** Provides machine-learning based recommendations for potential matches.
-* **Auto Journal Entries:** Automatically drafts General Ledger (GL) lines for approved reconciliations.
-* **Intercompany Reconciliation:** Reconciles internal transactions between sibling or parent-child companies.
-* **Treasury Management:** Tracks projected vs. actual cash positioning across bank accounts.
-* **Real-Time Bank APIs:** Integrates directly with banking institutions to pull statement data live.
+Roles:
+* Administrator
+* Reconciliation User
+* Reviewer
+* Approver
+* Auditor
+
+**Company Management**
+Manage:
+* Companies
+* Branches
+* Departments
+
+Fields:
+* Company Code
+* Company Name
+* GST Number
+* PAN Number
+* Currency
+
+**Bank Management**
+Manage:
+* Banks
+* Bank Accounts
+
+Fields:
+* Account Number
+* Account Type
+* Currency
+* Opening Balance
+
+**Statement Import**
+Supported Formats:
+* CSV
+* XLSX
+* MT940
+
+Validation:
+* Duplicate file detection
+* Mandatory field validation
+* Format validation
+
+Process:
+Upload → Validation → Staging → Transaction Creation → Audit Logging
+
+**Transaction Repository**
+Store all normalized transactions.
+Sources:
+* BANK
+* UPI
+* CARD
+* PAYROLL
+* AP
+* AR
+* TAX
+* GATEWAY
+
+**Matching Engine**
+Supported Matching:
+* One-to-One: Invoice ↔ Receipt
+* One-to-Many: Single Bank Entry ↔ Multiple Ledger Entries
+* Many-to-One: Multiple Receipts ↔ Single Settlement
+* Many-to-Many: Settlement Group ↔ Ledger Group
+
+Matching Criteria:
+* Reference Number
+* UTR
+* RRN
+* Amount
+* Date
+* Settlement ID
+
+**UPI Reconciliation**
+Capture:
+* UPI ID
+* RRN
+* Payer Name
+* Amount
+
+Matching Rules:
+* Exact RRN
+* Amount
+* Date
+
+**Gateway Reconciliation**
+Supported:
+* Razorpay
+* Cashfree
+* Stripe
+* PayU
+
+Components:
+* Gross Amount
+* Gateway Fee
+* GST
+* Net Settlement
+
+**Payroll Reconciliation**
+Support:
+* Salary Batch
+* Salary Payment File
+* Bank Debit Matching
+
+**Vendor Payment Reconciliation**
+Support:
+* Bulk Vendor Payments
+* NEFT Runs
+* RTGS Payments
+
+**Interest Reconciliation**
+Support:
+* Savings Interest
+* FD Interest
+
+Entries:
+Bank Dr To Interest Income
+
+**TDS Reconciliation**
+Support:
+* TDS on Interest
+* Customer TDS
+
+Entries:
+Bank Dr TDS Receivable Dr To Income
+
+**GST Support**
+Support GST on:
+* Gateway Charges
+* Bank Charges
+
+**Approval Workflow**
+States: Draft, Prepared, Reviewed, Approved
+Actions: Approve, Reject, Send Back
+
+**Audit Trail**
+Track:
+* Login
+* Imports
+* Matches
+* Reversals
+* Approvals
+* Configuration Changes
+Audit records must be immutable.
 
 ## 4. Database Design
-Core App Tables:
-* `users`, `roles`, `permissions`, `audit_logs`, `system_settings`
+
+**Core Tables**
+* `users`, `roles`, `permissions`, `system_settings`
 * `companies`, `branches`
 * `banks`, `bank_accounts`
-
-Reconciliation App Tables:
 * `import_batches`
 * `bank_transactions`, `source_transactions`
 * `reconciliation_groups`, `reconciliation_items`
 * `approval_workflows`, `approval_actions`
+* `tds_entries`, `interest_entries`
+* `audit_logs`, `report_requests`
 
-Advanced Phase App Tables:
+**Advanced Phase App Tables:**
 * `ExceptionCase` (exception_management)
 * `MatchSuggestion` (ai_matching)
 * `JournalEntry`, `JournalEntryLine` (journal_entries)
@@ -85,9 +261,128 @@ Advanced Phase App Tables:
 * `TreasuryPosition` (treasury)
 * `BankAPIConnection` (realtime_banks)
 
+## 5. Frontend Screens
+
+**Dashboard**
+Widgets:
+* Total Transactions
+* Matched Transactions
+* Pending Transactions
+* Match %
+* Imports Today
+
+**Company Maintenance**
+Create/Edit/Delete Company
+
+**Bank Account Maintenance**
+Create/Edit/Delete Bank Accounts
+
+**Statement Upload**
+* Upload File
+* View Import Status
+* Import History
+
+**Transaction Browser**
+Filters:
+* Date
+* Bank
+* Amount
+* Status
+* Source
+Actions:
+* View
+* Export
+
+**Auto Match Screen**
+* Run Matching
+* View Results
+* Approve Matches
+
+**Manual Match Screen**
+* Left Grid: Bank Transactions
+* Right Grid: Source Transactions
+* Actions: Match, Split, Merge, Unmatch
+
+**Approval Queue**
+* Pending Approvals
+* Review
+* Approve
+* Reject
+
+**Reports**
+* Bank Reconciliation Statement
+* Interest Report
+* TDS Report
+* Charges Report
+* Pending Reconciliation Report
+
+## 6. REST APIs
+
+* Authentication APIs
+* Company APIs
+* Bank APIs
+* Import APIs
+* Transaction APIs
+* Matching APIs
+* Approval APIs
+* Report APIs
+* Audit APIs
+
+## 7. Security
+
+* Password Policy
+* Role Based Access Control
+* Session Timeout
+* Audit Logging
+* CSRF Protection
+* Input Validation
+* Encryption of Sensitive Data
+
+## 8. Background Jobs
+
+* Import Job
+* Auto Matching Job
+* Report Generation Job
+* Cleanup Job
+* Notification Job
+
+## 9. Performance Targets
+
+* Import: 50,000 records under 2 minutes
+* Matching: 100,000 transactions under 5 minutes
+* Concurrent Users: 100+
+* Database: Millions of transaction records
+
+## 10. Deployment
+
+* Docker
+* Nginx
+* Gunicorn
+* Redis
+* Celery Workers
+* PostgreSQL
+* Linux Server
+
+## 11. Future Roadmap
+
+**Phase 2:**
+* Exception Management
+* AI Match Suggestions
+* Auto Journal Entries
+
+**Phase 3:**
+* Intercompany Reconciliation
+* Treasury Management
+* Advanced Analytics
+
+**Phase 4:**
+* ML Matching Engine (Implementation & Tuning)
+* Predictive Reconciliation
+* Real-Time Bank APIs
+
 ---
 
-## 5. Getting Started
+## 12. Getting Started
 
 ### Prerequisites
 
@@ -160,10 +455,3 @@ To run the unit test suite across the core, api, and advanced applications, exec
 ```
 python manage.py test
 ```
-
----
-
-## Future Roadmap
-* ML Matching Engine (Implementation & Tuning)
-* Predictive Reconciliation
-* Advanced Analytics Dashboards
