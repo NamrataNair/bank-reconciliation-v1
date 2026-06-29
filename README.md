@@ -84,6 +84,16 @@ Advanced Phase App Tables:
 * `IntercompanyTransaction` (intercompany)
 * `TreasuryPosition` (treasury)
 * `BankAPIConnection` (realtime_banks)
+* `ReportRequest` (analytics)
+
+## API Endpoints
+The platform exposes several RESTful API endpoints at `/api/` for managing the core system and analytical requests, including the newly added `ReportRequest` endpoints:
+* `/api/report-requests/` - Manage report requests.
+* `/api/roles/` - Manage user roles.
+* `/api/audit-logs/` - View system audit logs.
+* `/api/system-settings/` - Manage system configurations.
+* `/api/approval-workflows/` - Manage reconciliation approvals.
+* `/api/tds-entries/` and `/api/interest-entries/` - Manage specific entry types.
 
 ---
 
