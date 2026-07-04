@@ -80,3 +80,15 @@ class InterestEntry(models.Model):
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     interest_type = models.CharField(max_length=50) # SAVINGS, FD
     date = models.DateField()
+
+class ReportRequest(models.Model):
+    requested_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    report_type = models.CharField(max_length=50) # BRS, INTEREST, TDS, CHARGES, PENDING
+    status = models.CharField(max_length=50, default='PENDING') # PENDING, PROCESSING, COMPLETED, FAILED
+    requested_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    file_url = models.URLField(max_length=1000, blank=True, null=True)
+    parameters = models.JSONField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.report_type} - {self.status} - {self.requested_at}"

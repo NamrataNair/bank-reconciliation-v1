@@ -76,6 +76,7 @@ Reconciliation App Tables:
 * `bank_transactions`, `source_transactions`
 * `reconciliation_groups`, `reconciliation_items`
 * `approval_workflows`, `approval_actions`
+* `ReportRequest`
 
 Advanced Phase App Tables:
 * `ExceptionCase` (exception_management)
