@@ -167,3 +167,45 @@ python manage.py test
 * ML Matching Engine (Implementation & Tuning)
 * Predictive Reconciliation
 * Advanced Analytics Dashboards
+
+---
+
+## 6. Docker Deployment
+
+The platform is designed to be easily deployed using Docker and Docker Compose. The provided configuration sets up:
+- A Django web application served by Gunicorn
+- A PostgreSQL database
+- A Redis server for message brokering
+- A Celery worker for background jobs
+- An Nginx reverse proxy
+
+### Deployment Steps
+
+1. **Ensure Docker and Docker Compose are installed on your machine.**
+
+2. **Build and start the containers:**
+   ```bash
+   docker-compose up -d --build
+   ```
+
+3. **Apply database migrations (run inside the web container):**
+   ```bash
+   docker-compose exec web python manage.py migrate
+   ```
+
+4. **Create a superuser for administration:**
+   ```bash
+   docker-compose exec web python manage.py createsuperuser
+   ```
+
+5. **Access the platform:**
+   - The application will be available at [http://localhost](http://localhost) (via Nginx).
+   - API endpoints at [http://localhost/api/](http://localhost/api/)
+   - Django Admin at [http://localhost/admin/](http://localhost/admin/)
+
+### Stopping the Deployment
+
+To stop the containers and remove them:
+```bash
+docker-compose down
+```
