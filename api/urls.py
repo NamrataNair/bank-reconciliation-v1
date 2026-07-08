@@ -8,11 +8,15 @@ from .views_phases import (
 
 from .views import (
     UserViewSet, CompanyViewSet, BranchViewSet, BankViewSet, BankAccountViewSet,
-    ImportBatchViewSet, BankTransactionViewSet, SourceTransactionViewSet, ReconciliationGroupViewSet
+    ImportBatchViewSet, BankTransactionViewSet, SourceTransactionViewSet, ReconciliationGroupViewSet,
+    RoleViewSet, AuditLogViewSet, SystemSettingViewSet, ReconciliationItemViewSet,
+    ApprovalWorkflowViewSet, ApprovalActionViewSet, TDSEntryViewSet, InterestEntryViewSet,
+    ReportRequestViewSet
 )
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'roles', RoleViewSet)
 router.register(r'companies', CompanyViewSet)
 router.register(r'branches', BranchViewSet)
 router.register(r'banks', BankViewSet)
@@ -21,6 +25,14 @@ router.register(r'import-batches', ImportBatchViewSet)
 router.register(r'bank-transactions', BankTransactionViewSet)
 router.register(r'source-transactions', SourceTransactionViewSet)
 router.register(r'reconciliation-groups', ReconciliationGroupViewSet)
+router.register(r'reconciliation-items', ReconciliationItemViewSet)
+router.register(r'approval-workflows', ApprovalWorkflowViewSet)
+router.register(r'approval-actions', ApprovalActionViewSet)
+router.register(r'tds-entries', TDSEntryViewSet)
+router.register(r'interest-entries', InterestEntryViewSet)
+router.register(r'report-requests', ReportRequestViewSet)
+router.register(r'audit-logs', AuditLogViewSet)
+router.register(r'system-settings', SystemSettingViewSet)
 
 
 router.register(r'exceptions', ExceptionCaseViewSet)
